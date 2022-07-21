@@ -1,6 +1,6 @@
 import { Coin, StargateClient, SigningStargateClient } from "@cosmjs/stargate"
 import { ChangeEvent, Component, MouseEvent } from "react"
-import styles from '../../styles/Home.module.css'
+import styles from '../styles/Home.module.css'
 import { ChainInfo, Window as KeplrWindow } from "@keplr-wallet/types"
 import { AccountData, OfflineSigner } from "@cosmjs/proto-signing"
 

@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import { FaucetSender } from './components/FaucetSender'
+import { FaucetSender } from '../components/FaucetSender'
 
 const Home: NextPage = () => {
   return <FaucetSender
