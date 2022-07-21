@@ -127,7 +127,7 @@
     "long" "^4.0.0"
     "protobufjs" "~6.10.2"
 
-"@cosmjs/proto-signing@0.28.11":
+"@cosmjs/proto-signing@^0.28.11", "@cosmjs/proto-signing@0.28.11":
   "integrity" "sha512-ym0DpLff+0RBkD/mtFf6wrzyuGhcbcjuDMEdcUWOrJTo6n8DXeRmHkJkyy/mrG3QC4tQX/A81+DhfkANQmgcxw=="
   "resolved" "https://registry.npmjs.org/@cosmjs/proto-signing/-/proto-signing-0.28.11.tgz"
   "version" "0.28.11"
