@@ -1,3 +1,4 @@
+import { Coin, StargateClient } from "@cosmjs/stargate"
 import { ChangeEvent, Component, MouseEvent } from "react"
 import styles from '../../styles/Home.module.css'
 
@@ -25,6 +26,19 @@ export class FaucetSender extends Component<FaucetSenderProps, FaucetSenderState
             myBalance: "Click first",
             toSend: "0",
         }
+        setTimeout(this.init, 500)
+    }
+
+    init = async() => this.updateFaucetBalance(await StargateClient.connect(this.props.rpcUrl))
+
+     // Get the faucet's balance
+    updateFaucetBalance = async(client: StargateClient) => {
+      const balances: readonly Coin[] = await client.getAllBalances(this.props.faucetAddress)
+      const first: Coin = balances[0]
+      this.setState({
+          denom: first.denom,
+          faucetBalance: first.amount,
+      })
     }
 
     // Store changed token amount to state
