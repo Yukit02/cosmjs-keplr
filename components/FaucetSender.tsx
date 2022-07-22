@@ -1,9 +1,9 @@
 import { Coin, StargateClient, SigningStargateClient } from "@cosmjs/stargate"
 import { ChangeEvent, Component, MouseEvent } from "react"
 import styles from '../styles/Home.module.css'
-import { ChainInfo, Window as KeplrWindow } from "@keplr-wallet/types"
+import { Window as KeplrWindow } from "@keplr-wallet/types"
 import { AccountData, OfflineSigner } from "@cosmjs/proto-signing"
-
+import { Chain } from '../config/chain';
 declare global {
     interface Window extends KeplrWindow {}
 }
@@ -52,73 +52,6 @@ export class FaucetSender extends Component<FaucetSenderProps, FaucetSenderState
         toSend: e.currentTarget.value
     })
 
-    getTestnetChainInfo = (): ChainInfo => ({
-      chainId: "theta-testnet-001",
-      chainName: "theta-testnet-001",
-      rpc: "https://rpc.sentry-01.theta-testnet.polypore.xyz/",
-      rest: "https://rest.sentry-01.theta-testnet.polypore.xyz/",
-      bip44: {
-          coinType: 118,
-      },
-      bech32Config: {
-          bech32PrefixAccAddr: "cosmos",
-          bech32PrefixAccPub: "cosmos" + "pub",
-          bech32PrefixValAddr: "cosmos" + "valoper",
-          bech32PrefixValPub: "cosmos" + "valoperpub",
-          bech32PrefixConsAddr: "cosmos" + "valcons",
-          bech32PrefixConsPub: "cosmos" + "valconspub",
-      },
-      currencies: [
-          {
-              coinDenom: "ATOM",
-              coinMinimalDenom: "uatom",
-              coinDecimals: 6,
-              coinGeckoId: "cosmos",
-          },
-          {
-              coinDenom: "THETA",
-              coinMinimalDenom: "theta",
-              coinDecimals: 0,
-          },
-          {
-              coinDenom: "LAMBDA",
-              coinMinimalDenom: "lambda",
-              coinDecimals: 0,
-          },
-          {
-              coinDenom: "RHO",
-              coinMinimalDenom: "rho",
-              coinDecimals: 0,
-          },
-          {
-              coinDenom: "EPSILON",
-              coinMinimalDenom: "epsilon",
-              coinDecimals: 0,
-          },
-      ],
-      feeCurrencies: [
-          {
-              coinDenom: "ATOM",
-              coinMinimalDenom: "uatom",
-              coinDecimals: 6,
-              coinGeckoId: "cosmos",
-          },
-      ],
-      stakeCurrency: {
-          coinDenom: "ATOM",
-          coinMinimalDenom: "uatom",
-          coinDecimals: 6,
-          coinGeckoId: "cosmos",
-      },
-      coinType: 118,
-      gasPriceStep: {
-          low: 1,
-          average: 1,
-          high: 1,
-      },
-      features: ["stargate", "ibc-transfer", "no-legacy-stdTx"],
-  })
-
     // When the user clicks the "send to faucet button"
     onSendClicked = async(e: MouseEvent<HTMLButtonElement>) => {
       const { keplr } = window
@@ -130,9 +63,9 @@ export class FaucetSender extends Component<FaucetSenderProps, FaucetSenderState
       const { denom, toSend } = this.state
       const { faucetAddress, rpcUrl } = this.props
       // Suggest the testnet chain to Keplr
-      await keplr.experimentalSuggestChain(this.getTestnetChainInfo())
+      await keplr.experimentalSuggestChain(Chain.testnet())
       // Create the signing client
-      const offlineSigner: OfflineSigner = window.getOfflineSigner!("theta-testnet-001")
+      const offlineSigner: OfflineSigner = window.getOfflineSigner!(Chain.testnet().chainId)
       const signingClient = await SigningStargateClient.connectWithSigner(
           rpcUrl,
           offlineSigner,
