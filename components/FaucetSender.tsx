@@ -63,9 +63,9 @@ export class FaucetSender extends Component<FaucetSenderProps, FaucetSenderState
       const { denom, toSend } = this.state
       const { faucetAddress, rpcUrl } = this.props
       // Suggest the testnet chain to Keplr
-      await keplr.experimentalSuggestChain(Chain.testnet())
+      await keplr.experimentalSuggestChain(Chain.local())
       // Create the signing client
-      const offlineSigner: OfflineSigner = window.getOfflineSigner!(Chain.testnet().chainId)
+      const offlineSigner: OfflineSigner = window.getOfflineSigner!(Chain.local().chainId)
       const signingClient = await SigningStargateClient.connectWithSigner(
           rpcUrl,
           offlineSigner,
